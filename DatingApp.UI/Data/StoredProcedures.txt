@@ -1,0 +1,73 @@
+﻿USE [LoveDB3]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_AddChat]    Script Date: 17-08-2022 18:54:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usp_AddChat] @senderId int, @ReceiverId int, @Message nvarchar(500)
+AS
+INSERT INTO [Chats] (senderId, ReceiverId, [Message])
+VALUES ( @senderId, @ReceiverId, @Message)
+
+
+USE [LoveDB3]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_AllChats]    Script Date: 17-08-2022 18:55:44 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usp_AllChats]
+AS
+SELECT [ChatId]
+,[SenderId]
+,[ReceiverId]
+,[ReadStatus]
+,[Message]
+FROM [Chats]
+
+
+USE [LoveDB3]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_DeleteOneChat]    Script Date: 17-08-2022 18:58:59 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usp_DeleteOneChat] @chatId int
+AS
+Delete FROM [Chats]
+WHERE ChatId = @chatId
+
+
+USE [LoveDB3]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_GetOneChat]    Script Date: 17-08-2022 18:59:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usp_GetOneChat] @chatId int
+AS
+SELECT [ChatId]
+,[SenderId]
+,[ReceiverId]
+,[ReadStatus]
+,[Message]
+FROM [Chats]
+WHERE ChatId = @chatId
+
+
+USE [LoveDB3]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_UpdateChat]    Script Date: 17-08-2022 19:00:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usp_UpdateChat] @SenderId int, @ReceiverId int, @Message nvarchar(500), @ChatId int
+AS
+UPDATE [Chats]
+SET SenderId = @SenderId, ReceiverId = @ReceiverId, [Message] = @Message
+WHERE ChatId = @ChatId

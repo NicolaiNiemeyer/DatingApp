@@ -1,0 +1,40 @@
+﻿@page "/accounts"
+@using DatingApp.BL.Models
+@using DatingApp.UI.Data
+
+@inject AccountService AccountService
+
+<h3>User List</h3>
+
+@if (account == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="d-flex flex-wrap p-2 bd-highlight">
+        @foreach(var username in account)
+        {
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+                <div class="card-header">
+                    <h3>@username.UserName</h3>
+                </div>
+                @*<img class="card-img-top imageThumbnail" src="@employee.PhotoPath" />*@
+                <div class="card-footer text-center">
+                    <a href="#" class="btn btn-primary m1">View</a>
+                    <a href="#" class="btn btn-primary m1">Edit</a>
+                    <a href="#" class="btn btn-danger m1">Delete</a>
+                </div>
+
+            </div>
+        }
+    </div>
+}
+@code {
+    private List<Account> account;
+
+    protected override void OnInitialized()
+    {
+        account = AccountService.GetAccounts();
+    }
+}
