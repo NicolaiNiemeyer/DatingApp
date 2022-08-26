@@ -4,6 +4,8 @@ using DatingApp.UI.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
 .UseSqlServer(("name=ConnectionStrings:MyConnection")));
+builder.Services.AddMudServices(c => { c.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight; });
+
 
 var app = builder.Build();
 
