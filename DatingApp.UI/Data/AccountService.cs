@@ -1,18 +1,21 @@
 ﻿using DatingApp.BL.Models;
+using DatingApp.EntityFramework;
 
 namespace DatingApp.UI.Data
 {
   public class AccountService
   {
-    private AccountRepository _accountRepository;
+    private readonly ApplicationDbContext _context;
     public List<Account> Accounts { get; set; } = new List<Account>();
-    public AccountService(AccountRepository accountRepository)
+    public AccountService(ApplicationDbContext context)
     {
-      _accountRepository = accountRepository;
+      _context = context;
     }
-    public List<Account> GetAccounts()
+    public List<String> GetAccounts()
     {
-      return _accountRepository.GetAllAccounts().ToList();
+      return _context.Accounts
+        .Select(c => c.UserName)
+        .ToList();
     }
   }
 }

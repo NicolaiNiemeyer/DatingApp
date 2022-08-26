@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddSingleton<AccountRepository>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
 .UseSqlServer(("name=ConnectionStrings:MyConnection")));
