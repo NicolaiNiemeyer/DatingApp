@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.BL.Models
 {
-  public class Account : DomainObject
+  public class Account
   {
     public int AccountId { get; set; }
     public string Email { get; set; } = "";

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.BL.Models
 {
-  public class Profile : DomainObject
+  public class Profile
   {
     public int ProfileId { get; set; }
     public DateTime BirthDate { get; set; }

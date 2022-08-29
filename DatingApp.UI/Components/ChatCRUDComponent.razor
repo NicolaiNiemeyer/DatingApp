@@ -1,0 +1,132 @@
+﻿@page "/chatcrud"
+@using DatingApp.BL.Models
+@using DatingApp.UI.Data
+@*@inherits OwningComponentBase<ChatServices>*@
+@inject ChatRepository Service
+
+<h3>Chat Operations</h3>
+
+<button class="btn-primary" @onclick="Showpopup">Add New Record</button>
+
+@if (popup)
+{
+<div class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chat Table</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="Closepopup"></button>
+      </div>
+      <EditForm Model="@Objinsert" OnValidSubmit="InsertRec">
+        <div class="modal-body">
+            <table border="1">
+                <tr>
+                    <td>Sender Id</td>
+                    <td><input type="number" 
+                        placeholder="Enter Sender Id..." 
+                        @bind="Objinsert.SenderId" /></td>
+                </tr>
+                <tr>
+                    <td>Receiver Id</td>
+                    <td><input type="number" 
+                        placeholder="Receiver Id..." 
+                        @bind="Objinsert.ReceiverId" /></td>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                    <td><input type="text" 
+                        placeholder="Enter message" 
+                        @bind="Objinsert.Message" /></td>
+                </tr>
+               
+            </table>
+        </div>
+              <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" @onclick="Closepopup">Save changes</button>
+      </div>
+
+      </EditForm>
+    </div>
+  </div>
+</div>
+}
+<table class="table">
+    <tr>
+        <th>ChatId</th>
+        <th>Sender Id</th>
+        <th>Receiver Id</th>
+        <th>Read Status</th>
+        <th>Message</th>
+    </tr>
+    @foreach (var item in DisplayData)
+    {
+        <tr>
+            <td>@item.ChatId</td>
+            <td>@item.SenderId</td>
+            <td>@item.ReceiverId</td>
+            <td>@item.ReadStatus</td>
+            <td>@item.Message</td>
+            <td><button class="btn-outline-info" @onclick="(() => EditRec(item))">Edit</button></td>
+            <td><button class="btn-outline-danger" @onclick="(() => DeleteRec(item))">Delete</button></td>
+        </tr>
+    }
+</table>
+
+@code {
+    List<Chat> DisplayData;
+    Chat Objinsert;
+    bool popup = false;
+
+    protected override void OnInitialized()
+    {
+        Objinsert = new Chat();
+        DisplayData = Service.GetChats();
+        
+    }
+
+    void Showpopup()
+    {
+        popup = true;
+    }
+
+    void Closepopup()
+    {
+        popup = false;
+    }
+
+    void InsertRec()
+    {
+        var ObjUpdate = false;
+        if (Objinsert.ChatId > 0)
+        {
+            ObjUpdate = Service.UpdateChat(Objinsert);
+            popup = false;
+        }
+        else
+        {
+           
+            Objinsert.ChatId = 0;
+            Service.AddChat(Objinsert);
+        }
+
+        Objinsert = new Chat();
+        DisplayData = Service.GetChats();
+    }
+
+    void EditRec(Chat ecobj)
+    {
+        Objinsert = ecobj;
+       // Objinsert = new Chat();
+        popup = true;
+    }
+
+    void DeleteRec(Chat ecobj)
+    {
+        Service.DeleteChat(ecobj);
+        DisplayData.Clear();
+        Objinsert = new Chat();
+        DisplayData = Service.GetChats();
+    }
+}
+
+

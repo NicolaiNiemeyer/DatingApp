@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.BL.Models
 {
-  public class City : DomainObject
+  public class City
   {
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int CityId { get; set; }

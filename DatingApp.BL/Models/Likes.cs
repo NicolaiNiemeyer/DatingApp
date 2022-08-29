@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.BL.Models
 {
-  public class Likes : DomainObject
+  public class Likes
   {
     public int LikesId { get; set; }
     public int? LikerId { get; set; } = 0;
